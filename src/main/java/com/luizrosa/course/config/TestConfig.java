@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.luizrosa.course.entities.Category;
 import com.luizrosa.course.entities.Order;
+import com.luizrosa.course.entities.OrderItem;
 import com.luizrosa.course.entities.Product;
 import com.luizrosa.course.entities.User;
 import com.luizrosa.course.entities.enums.OrderStatus;
 import com.luizrosa.course.repositories.CategoryRepository;
+import com.luizrosa.course.repositories.OrderItemRepository;
 import com.luizrosa.course.repositories.OrderRepository;
 import com.luizrosa.course.repositories.ProductRepository;
 import com.luizrosa.course.repositories.UserRepository;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception { // vai ser executado qd a aplicacao foi iniciada
@@ -70,7 +75,11 @@ public class TestConfig implements CommandLineRunner {
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3));
 		
-	}
-	
-	
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3, oi4));	
+	}	
 }
